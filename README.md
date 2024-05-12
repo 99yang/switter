@@ -1,7 +1,7 @@
-# switter project (twitter clone)
-# React + TypeScript + Firebase
+# Switter project (twitter clone)
+## React + TypeScript + Firebase
 
-# Settings
+## Settings
 
 ```
 npm install
@@ -19,7 +19,7 @@ npm i styled-components@6.0.7
 npm i @types/styled-components -D
 ```
 
-# Git
+## Git
 
 git push 중 '[rejected] main -> main (fetch first) error: failed to push some refs to' 에러
 원인: 깃의 원격저장소와 현재 로컬저장소가 동기화되어 있지 않기때문에 나타나는 문제이다.
