@@ -20,6 +20,9 @@ npm i styled-components@6.0.7
 ```
 npm i @types/styled-components -D
 ```
+```
+npm install firebase@10.1.0
+```
 
 ## Git
 
