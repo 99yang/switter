@@ -1,5 +1,7 @@
 # Switter project (twitter clone)
-## React + TypeScript + Firebase
+
+## Skills
+### React + TypeScript + Firebase
 
 ## Settings
 
