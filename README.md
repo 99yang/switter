@@ -1,6 +1,8 @@
 # Switter project (twitter clone)
 ![11](https://github.com/99yang/switter/assets/86218573/e424b7b8-c82f-42dd-ab6f-c0426a736c7e)
 
+### 완 (로그인, 회원가입(이메일, 깃허브연동), 로그아웃)
+### 미완 (게시판, 글 게시/읽기/업데이트/삭제, 댓글기능)
 ## Skills
 ### React + TypeScript + Firebase
 
