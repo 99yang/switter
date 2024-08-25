@@ -1,5 +1,7 @@
 # Switter project (twitter clone)
 ![11](https://github.com/99yang/switter/assets/86218573/e424b7b8-c82f-42dd-ab6f-c0426a736c7e)
+<img width="903" alt="스크린샷 2024-08-25 09 54 36" src="https://github.com/user-attachments/assets/d3cd6aef-0014-40af-b8ab-de8fccae05eb">
+
 
 ### 완 (로그인, 회원가입(이메일, 깃허브연동), 로그아웃, firestore nosql)
 ### 미완 (게시판, 글 게시/읽기/업데이트/삭제, 댓글기능)
