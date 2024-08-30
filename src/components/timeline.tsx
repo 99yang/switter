@@ -1,7 +1,7 @@
 import {
   collection,
   doc,
-  getDocs,
+  //   getDocs,
   limit,
   onSnapshot,
   orderBy,
@@ -27,6 +27,10 @@ const Wrapper = styled.div`
   display: flex;
   gap: 10px;
   flex-direction: column;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default function TimeLine() {
