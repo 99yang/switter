@@ -1,10 +1,18 @@
 # Switter project (twitter clone)
-![11](https://github.com/99yang/switter/assets/86218573/e424b7b8-c82f-42dd-ab6f-c0426a736c7e)
-<img width="903" alt="스크린샷 2024-08-25 09 54 36" src="https://github.com/user-attachments/assets/d3cd6aef-0014-40af-b8ab-de8fccae05eb">
+## pages
+<img width="700" alt="스크린샷 2024-08-30 16 23 43" src="https://github.com/user-attachments/assets/595b4845-d5a2-4902-a823-d721c0bc64b8">
+<img width="700" alt="스크린샷 2024-08-30 16 32 09" src="https://github.com/user-attachments/assets/0b7f275a-1e61-4dab-a352-1923f7ff218e">
+<img width="887" alt="스크린샷 2024-08-30 16 22 03" src="https://github.com/user-attachments/assets/1e9db398-66f8-4fda-9b9d-dda40f023647">
 
 
-### 완 (로그인, 회원가입(이메일, 깃허브연동), 로그아웃, firestore nosql)
-### 미완 (게시판, 글 게시/읽기/업데이트/삭제, 댓글기능)
+
+## 진행도 
+## 완성 
+### 로그인, 회원가입(이메일, 깃허브연동), 로그아웃, firestore nosql 
+### 게시글 작성(글쓰기, 사진첨부), 쿼리 생성 및 읽어오기
+## 진행중 
+### 업데이트/삭제 기능, 댓글기능, 유저 프로필
+
 ## Skills
 ### React + TypeScript + Firebase
 
