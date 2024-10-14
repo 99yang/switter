@@ -1,9 +1,19 @@
-// #5.0
+// #5.0 user avatar
 import { styled } from 'styled-components';
-import { auth, storage } from '../firebase';
-import { useState } from 'react';
+import { auth, db, storage } from '../firebase';
+import { useEffect, useState } from 'react';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore';
+import { ITweet } from '../components/timeline';
+import Tweet from '../components/tweet';
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,9 +45,17 @@ const Name = styled.span`
   font-size: 22px;
 `;
 
+const Tweets = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
 export default function Profile() {
   const user = auth.currentUser;
   const [avatar, setAvatar] = useState(user?.photoURL);
+  const [tweets, setTweets] = useState<ITweet[]>([]);
   const onAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (!user) return;
@@ -52,6 +70,34 @@ export default function Profile() {
       });
     }
   };
+  // #5.1 user timelines
+  const fetchTweets = async () => {
+    const tweetQuery = query(
+      collection(db, 'tweets'),
+      // where에는 3개의 인자가 필요하며, 1번은 doc의 field, 2번은 연산자 3번은 원하는 조건
+      // 데이터를 필터링하려면 firestore에 해당 정보를 주어야함. (브라우저 console창에서 설정창 링크)
+      where('userId', '==', user?.uid),
+      orderBy('createdAt', 'desc'),
+      limit(25)
+    );
+
+    const snapshot = await getDocs(tweetQuery);
+    const tweets = snapshot.docs.map((doc) => {
+      const { tweet, createdAt, userId, username, photo } = doc.data();
+      return {
+        tweet,
+        createdAt,
+        userId,
+        username,
+        photo,
+        id: doc.id,
+      };
+    });
+    setTweets(tweets);
+  };
+  useEffect(() => {
+    fetchTweets();
+  }, []);
 
   return (
     <Wrapper>
@@ -76,6 +122,11 @@ export default function Profile() {
         accept="image/*"
       />
       <Name>{user?.displayName ? user.displayName : 'Anonymous'}</Name>
+      <Tweets>
+        {tweets.map((tweet) => (
+          <Tweet key={tweet.id} {...tweet} />
+        ))}
+      </Tweets>
     </Wrapper>
   );
 }
