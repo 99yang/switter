@@ -52,10 +52,49 @@ const Tweets = styled.div`
   gap: 10px;
 `;
 
+const EditNameContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+const ChangeNameInput = styled.input`
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+`;
+
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #8876b3;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  &:hover {
+    background-color: #6d5a9d;
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+`;
+
+const CancelButton = styled(StyledButton)`
+  background-color: tomato;
+  &:hover {
+    background-color: #d32f2f;
+  }
+`;
+
 export default function Profile() {
   const user = auth.currentUser;
   const [avatar, setAvatar] = useState(user?.photoURL);
   const [tweets, setTweets] = useState<ITweet[]>([]);
+  const [name, setName] = useState(user?.displayName || '');
+  const [editName, setEditName] = useState(false);
   const onAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (!user) return;
@@ -99,6 +138,18 @@ export default function Profile() {
     fetchTweets();
   }, []);
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const toggleEditName = () => setEditName(!editName);
+  const updateName = async () => {
+    if (!user) return;
+    await updateProfile(user, {
+      displayName: name,
+    });
+    window.location.reload();
+  };
+
   return (
     <Wrapper>
       <AvatarUpload htmlFor="avatar">
@@ -122,6 +173,21 @@ export default function Profile() {
         accept="image/*"
       />
       <Name>{user?.displayName ? user.displayName : 'Anonymous'}</Name>
+      {editName ? (
+        <EditNameContainer>
+          <ChangeNameInput
+            type="text"
+            placeholder="Enter Name"
+            value={name}
+            onChange={handleNameChange}
+          />
+          <StyledButton onClick={updateName}>Update</StyledButton>
+          <CancelButton onClick={toggleEditName}>Cancel</CancelButton>
+        </EditNameContainer>
+      ) : (
+        <StyledButton onClick={toggleEditName}>Change Name</StyledButton>
+      )}
+
       <Tweets>
         {tweets.map((tweet) => (
           <Tweet key={tweet.id} {...tweet} />

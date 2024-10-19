@@ -42,6 +42,9 @@ const AttachFileButton = styled.label`
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
 const AttachFileInput = styled.input`
@@ -56,9 +59,12 @@ const SubmitBtn = styled.input`
   padding: 10px 0px;
   font-size: 14px;
   cursor: pointer;
-  &:hover,
+  &:hover {
+    opacity: 0.9;
+  }
   &:active {
     opacity: 0.9;
+    transform: scale(0.98);
   }
 `;
 

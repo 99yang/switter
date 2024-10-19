@@ -32,6 +32,9 @@ export const Input = styled.input`
     &:hover {
       opacity: 0.8;
     }
+    &:active {
+      transform: scale(0.98);
+    }
   }
 `;
 export const Error = styled.span`

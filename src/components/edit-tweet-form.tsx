@@ -51,6 +51,9 @@ const AttachFileButton = styled.label`
   color: #8876b3;
   text-align: center;
   cursor: pointer;
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
 const AttachFileInput = styled.input`
@@ -68,6 +71,9 @@ const SubmitBtn = styled.input`
   &:hover,
   &:active {
     opacity: 0.9;
+  }
+  &:active {
+    transform: scale(0.98);
   }
 `;
 
