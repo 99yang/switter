@@ -143,7 +143,7 @@ export default function Profile() {
     setName(e.target.value);
   };
   const toggleEditName = () => setEditName(!editName);
-  const updateTweetsUsername = async (newUsername) => {
+  const updateTweetsUsername = async (newUsername: string) => {
     const batch = writeBatch(db);
     const tweetQuery = query(
       collection(db, 'tweets'),
