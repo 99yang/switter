@@ -9,12 +9,19 @@ import {
   uploadBytes,
 } from 'firebase/storage';
 
-/* export interface EditITweet {
-  id: string;
-  photo?: string;
-  tweet: string;
-  setIsEditing: () => boolean;
-} */
+// export interface EditITweet {
+//   id: string;
+//   photo?: string;
+//   tweet: string;
+//   setIsEditing: () => boolean;
+// }
+
+interface EditTweetFormProps {
+  photo?: string; // 적절한 타입으로 변경하세요
+  tweet: string; // 적절한 타입으로 변경하세요
+  id: string; // 적절한 타입으로 변경하세요
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const Form = styled.form`
   display: flex;
@@ -77,7 +84,12 @@ const SubmitBtn = styled.input`
   }
 `;
 
-export default function EditTweetForm({ photo, tweet, id, setIsEditing }) {
+export default function EditTweetForm({
+  photo,
+  tweet,
+  id,
+  setIsEditing,
+}: EditTweetFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [editTweet, setEditTweet] = useState(tweet);
   const [editFile, setEditFile] = useState<File | null>(null);

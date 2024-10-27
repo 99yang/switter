@@ -109,7 +109,7 @@ export default function Profile() {
       });
     }
   };
-  // #5.1 user timelines
+  // #5.1 user timelines 사용자 트윗을 가져오는 함수
   const fetchTweets = async () => {
     const tweetQuery = query(
       collection(db, 'tweets'),

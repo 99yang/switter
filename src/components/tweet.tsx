@@ -71,7 +71,7 @@ export default function Tweet({ username, photo, tweet, userId, id }: ITweet) {
   const user = auth.currentUser;
   const onDelete = async () => {
     const ok = confirm('Are you sure you want to delete this tweet?');
-    if (!ok || user.uid !== userId) return;
+    if (!ok || !user || user.uid !== userId) return;
     try {
       await deleteDoc(doc(db, 'tweets', id));
       if (photo) {
@@ -99,7 +99,7 @@ export default function Tweet({ username, photo, tweet, userId, id }: ITweet) {
         ) : (
           <Payload>{tweet}</Payload>
         )}
-        {user.uid === userId ? (
+        {user && user.uid === userId ? (
           <BtnWrap>
             <DeleteButton onClick={onDelete}>Delete</DeleteButton>
             <EditButton onClick={onEdit}>

@@ -1,6 +1,6 @@
 import {
   collection,
-  doc,
+  // doc,
   //   getDocs,
   limit,
   onSnapshot,
@@ -34,7 +34,7 @@ const Wrapper = styled.div`
 `;
 
 export default function TimeLine() {
-  const [tweets, setTweet] = useState<ITweet>([]);
+  const [tweets, setTweet] = useState<ITweet[]>([]);
   //   tweet 불러오기
 
   useEffect(() => {
