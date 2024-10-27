@@ -8,6 +8,8 @@
 <img width="834" alt="avatar" src="https://github.com/user-attachments/assets/921e2528-d18e-4e5a-b7ea-0d9811e6b5e1">
 <img width="887" alt="avatar1" src="https://github.com/user-attachments/assets/b89f436f-eb6f-4a8d-847c-3f74a594f8d6">
 <img width="798" alt="avatar2" src="https://github.com/user-attachments/assets/ec63032b-bf13-45d8-adbf-bbd6ef5a1f8d">
+<img width="852" alt="스크린샷 2024-10-27 16 30 51" src="https://github.com/user-attachments/assets/2c178538-da24-41a6-86ae-bb72763dce2b">
+
 
 
 
@@ -27,8 +29,9 @@
 ### - 게시글 작성(글쓰기, 사진첨부), 쿼리 생성 및 읽어오기
 ### - 게시글 수정(글수정, 사진수정), 삭제
 ### - profile 페이지 및 avatar 변경 기능, 닉네임 변경 기능
+### - 게시글 클릭 시 팝업창 띄우기
 ## 진행중 
-### - 댓글기능, 트윗 클릭시 팝업창으로 확대 기능
+### - 댓글기능, 좋아요 버튼
 
 # 배포 (firebase)
 ### https://switter-react.web.app
@@ -43,10 +46,12 @@
 - 실시간 업데이트 확인 가능
 - 올린 트윗은 인가된 사용자만 수정 및 삭제가 가능
 - 비용절약으로 트윗 리미트 25개 제한
+- 트윗 클릭시 게시글 팝업창으로 띄우기
 
 ### 프로필 페이지
 - 사용자 아바타 기본이미지 설정 및 변경 기능 (5mb 미만으로 제한)
 - 사용자 본인 게시글만 따로 확인 가능 (수정, 삭제 동일하게 가능)
+- 사용자 이름 변경 기능 (변경 즉시 홈화면, 프로필페이지에 반영)
 
 # Settings
 
