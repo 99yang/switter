@@ -11,6 +11,7 @@ import {
   orderBy,
   query,
   where,
+  writeBatch,
 } from 'firebase/firestore';
 import { ITweet } from '../components/timeline';
 import Tweet from '../components/tweet';
@@ -142,12 +143,30 @@ export default function Profile() {
     setName(e.target.value);
   };
   const toggleEditName = () => setEditName(!editName);
+  const updateTweetsUsername = async (newUsername) => {
+    const batch = writeBatch(db);
+    const tweetQuery = query(
+      collection(db, 'tweets'),
+      where('userId', '==', user?.uid)
+    );
+
+    const snapshot = await getDocs(tweetQuery);
+    snapshot.docs.forEach((doc) => {
+      const tweetRef = doc.ref;
+      batch.update(tweetRef, { username: newUsername });
+    });
+    await batch.commit(); // Firestore에 변경사항 커밋
+  };
+
   const updateName = async () => {
     if (!user) return;
     await updateProfile(user, {
       displayName: name,
     });
+
+    await updateTweetsUsername(name); // 유저네임 업데이트
     window.location.reload();
+    setEditName(false); // 수정 모드 종료
   };
 
   return (

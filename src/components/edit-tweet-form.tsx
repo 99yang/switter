@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { auth, db, storage } from '../firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import {
   deleteObject,
   getDownloadURL,
@@ -9,17 +9,10 @@ import {
   uploadBytes,
 } from 'firebase/storage';
 
-// export interface EditITweet {
-//   id: string;
-//   photo?: string;
-//   tweet: string;
-//   setIsEditing: () => boolean;
-// }
-
 interface EditTweetFormProps {
-  photo?: string; // 적절한 타입으로 변경하세요
-  tweet: string; // 적절한 타입으로 변경하세요
-  id: string; // 적절한 타입으로 변경하세요
+  photo?: string;
+  tweet: string;
+  id: string;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -36,13 +29,8 @@ const TextArea = styled.textarea`
   border: 2px solid white;
   border-radius: 20px;
   font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: white;
   resize: none;
-  &::placeholder {
-    font-size: 16px;
-  }
   &:focus {
     outline: none;
     border-color: #8876b3;
@@ -94,21 +82,17 @@ export default function EditTweetForm({
   const [editTweet, setEditTweet] = useState(tweet);
   const [editFile, setEditFile] = useState<File | null>(null);
 
-  // console.log(id, tweet, photo);
-
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditTweet(e.target.value);
   };
+
   const onEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
-
     if (files && files.length === 1) {
       if (files[0].size > 1000000) {
-        alert('oooops! too much size!!');
+        alert('The file is too large!');
         return;
       }
-      // console.log(files);
-
       setEditFile(files[0]);
     }
   };
@@ -122,26 +106,35 @@ export default function EditTweetForm({
     try {
       setIsLoading(true);
       const tweetRef = doc(db, 'tweets', id);
+
+      // 1. Firestore에서 최신 유저 정보를 가져오기
+      const userRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userRef);
+      let updatedUsername = user.displayName; // 기본 유저네임
+      if (userDoc.exists()) {
+        updatedUsername = userDoc.data()?.displayName || updatedUsername;
+      }
+
+      // 2. 트윗 업데이트: 내용, 최신 유저네임
       await updateDoc(tweetRef, {
         tweet: editTweet,
+        username: updatedUsername,
       });
 
+      // 3. 새로운 파일을 업로드하고 기존 파일 삭제
       if (editFile) {
         if (photo) {
           const originRef = ref(storage, `tweets/${user.uid}/${id}`);
           await deleteObject(originRef);
         }
-
         const locationRef = ref(storage, `tweets/${user.uid}/${id}`);
         const result = await uploadBytes(locationRef, editFile);
         const url = await getDownloadURL(result.ref);
-
-        // console.log(url);
-
         await updateDoc(tweetRef, {
           photo: url,
         });
       }
+
       setEditTweet('');
       setEditFile(null);
       setIsEditing(false);
