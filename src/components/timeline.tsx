@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { db } from '../firebase';
 import Tweet from './tweet';
+import TweetPopup from './tweet-popup';
 import { Unsubscribe } from 'firebase/auth';
 
 export interface ITweet {
@@ -32,6 +33,15 @@ const Wrapper = styled.div`
 
 export default function TimeLine() {
   const [tweets, setTweet] = useState<ITweet[]>([]);
+  const [selectedTweet, setSelectedTweet] = useState<ITweet | null>(null); // 선택된 트윗 상태
+
+  const handleTweetClick = (tweet: ITweet) => {
+    setSelectedTweet(tweet); // 클릭된 트윗을 설정
+  };
+
+  const closePopup = () => {
+    setSelectedTweet(null); // 팝업 닫기
+  };
 
   useEffect(() => {
     let unsubscribe: Unsubscribe | null = null;
@@ -66,8 +76,14 @@ export default function TimeLine() {
   return (
     <Wrapper>
       {tweets.map((tweet) => (
-        <Tweet key={tweet.id} {...tweet} />
+        <div key={tweet.id} onClick={() => handleTweetClick(tweet)}>
+          <Tweet {...tweet} />
+        </div>
       ))}
+
+      {selectedTweet && (
+        <TweetPopup tweet={selectedTweet} onClose={closePopup} />
+      )}
     </Wrapper>
   );
 }
